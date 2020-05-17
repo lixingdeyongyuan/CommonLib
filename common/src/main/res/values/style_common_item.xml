@@ -2,9 +2,12 @@
 <resources>
     <declare-styleable name="CommonItem">
 
+        <attr name="dividerHeight" format="dimension|reference" />
+        <attr name="dividerColor" format="color|reference" />
         <attr name="leftText" format="string|reference" />
         <attr name="rightText" format="string|reference" />
         <attr name="rightHintText" format="string|reference" />
     </declare-styleable>
+    <color name="dividerColor">#ebeced</color>
 
 </resources>

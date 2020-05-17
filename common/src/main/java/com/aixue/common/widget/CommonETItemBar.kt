@@ -1,9 +1,9 @@
 package com.aixue.common.widget
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
-import android.widget.RelativeLayout
 import com.aixue.common.R
 import kotlinx.android.synthetic.main.layout_common_et_item.view.*
 import kotlinx.android.synthetic.main.layout_common_et_item.view.tvLeft
@@ -13,23 +13,22 @@ class CommonETItemBar @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) :
-    RelativeLayout(context, attrs, defStyleAttr) {
+    CommonItemBar(context, attrs, defStyleAttr) {
 
-    init {
-        attrs?.let {
-            var typeArray = context!!.obtainStyledAttributes(
-                it,
-                R.styleable.CommonItem
-            )
-            var leftText = typeArray.getText(R.styleable.CommonItem_leftText)
-            var rightText = typeArray.getText(R.styleable.CommonItem_rightText)
-            var rightHintText = typeArray.getText(R.styleable.CommonItem_rightHintText)
+
+    override fun initView(typedArray: TypedArray?) {
+        super.initView(typedArray)
+        typedArray?.let {
+            var leftText = it.getText(R.styleable.CommonItem_leftText)
+            var rightText = it.getText(R.styleable.CommonItem_rightText)
+            var rightHintText = it.getText(R.styleable.CommonItem_rightHintText)
             View.inflate(context, R.layout.layout_common_et_item, this)
             tvLeft.text = leftText
             etRight.setText(rightText)
             etRight.setHint(rightHintText)
         }
     }
+
 
     fun setLeftText(text: String) {
         tvLeft.text = text

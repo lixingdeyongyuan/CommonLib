@@ -4,11 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:clickable="false">
-
         <TextView
             android:id="@+id/tvLeft"
             android:layout_width="wrap_content"
@@ -32,13 +27,4 @@
             android:background="@null"
             android:gravity="right"
             android:text="" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:layout_alignParentBottom="true"
-            android:background="#ebeced" />
-
-
-    </RelativeLayout>
 </merge>

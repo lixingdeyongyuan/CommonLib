@@ -1,6 +1,7 @@
 package com.aixue.common.widget
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
@@ -12,20 +13,19 @@ class CommonTVItemBar @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) :
-    RelativeLayout(context, attrs, defStyleAttr) {
+    CommonItemBar(context, attrs, defStyleAttr) {
 
-    init {
-        attrs?.let {
-            var typeArray = context!!.obtainStyledAttributes(it,
-                R.styleable.CommonItem
-            )
-            var leftText = typeArray.getText(R.styleable.CommonItem_leftText)
-            var rightText = typeArray.getText(R.styleable.CommonItem_rightText)
-            View.inflate(context!!, R.layout.layout_common_tv_item, this)
+    override fun initView(typedArray: TypedArray?) {
+        super.initView(typedArray)
+        typedArray?.let {
+            var leftText = it.getText(R.styleable.CommonItem_leftText)
+            var rightText = it.getText(R.styleable.CommonItem_rightText)
+            View.inflate(context, R.layout.layout_common_tv_item, this)
             tvLeft.text = leftText
             tvRight.text = rightText
         }
     }
+
 
     fun setLeftText(text: String) {
         tvLeft.text = text
