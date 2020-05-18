@@ -9,5 +9,6 @@
         <attr name="rightHintText" format="string|reference" />
     </declare-styleable>
     <color name="dividerColor">#ebeced</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>

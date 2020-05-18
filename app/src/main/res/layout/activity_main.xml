@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
 
 
@@ -16,28 +17,26 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.aixue.common.widget.CommonTVItemBar
 
+
+
+    <com.aixue.common.widget.commonitem.CommonTVItemBar
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/haha"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         app:leftText="11121"
         app:rightText="2333" />
 
-    <com.aixue.common.widget.CommonItemBar
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:dividerColor="#000000"
-        app:dividerHeight="10px"
+
+    <com.aixue.common.widget.keyboard.NumKeyboard
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:text="hahaha"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-    </com.aixue.common.widget.CommonItemBar>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

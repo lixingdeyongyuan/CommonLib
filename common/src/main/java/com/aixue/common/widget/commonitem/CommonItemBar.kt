@@ -1,4 +1,4 @@
-package com.aixue.common.widget
+package com.aixue.common.widget.commonitem
 
 import android.content.Context
 import android.content.res.TypedArray

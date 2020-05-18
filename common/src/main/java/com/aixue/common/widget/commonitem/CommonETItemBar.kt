@@ -1,28 +1,31 @@
-package com.aixue.common.widget
+package com.aixue.common.widget.commonitem
 
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
-import android.widget.RelativeLayout
 import com.aixue.common.R
-import kotlinx.android.synthetic.main.layout_common_tv_item.view.*
+import kotlinx.android.synthetic.main.layout_common_et_item.view.*
+import kotlinx.android.synthetic.main.layout_common_et_item.view.tvLeft
 
-class CommonTVItemBar @JvmOverloads constructor(
+class CommonETItemBar @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) :
     CommonItemBar(context, attrs, defStyleAttr) {
 
+
     override fun initView(typedArray: TypedArray?) {
         super.initView(typedArray)
         typedArray?.let {
             var leftText = it.getText(R.styleable.CommonItem_leftText)
             var rightText = it.getText(R.styleable.CommonItem_rightText)
-            View.inflate(context, R.layout.layout_common_tv_item, this)
+            var rightHintText = it.getText(R.styleable.CommonItem_rightHintText)
+            View.inflate(context, R.layout.layout_common_et_item, this)
             tvLeft.text = leftText
-            tvRight.text = rightText
+            etRight.setText(rightText)
+            etRight.setHint(rightHintText)
         }
     }
 
@@ -32,12 +35,12 @@ class CommonTVItemBar @JvmOverloads constructor(
     }
 
     fun setRightText(text: String) {
-        tvRight.text = text
+        etRight.setText(text)
     }
 
     fun getRightText(): CharSequence {
         //NOTE 这个text不可能为空。因为源码就表达了不为空
-        return tvRight.text
+        return etRight.text
     }
 
 }
