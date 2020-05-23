@@ -19,9 +19,9 @@ class CommonETItemBar @JvmOverloads constructor(
     override fun initView(typedArray: TypedArray?) {
         super.initView(typedArray)
         typedArray?.let {
-            var leftText = it.getText(R.styleable.CommonItem_leftText)
-            var rightText = it.getText(R.styleable.CommonItem_rightText)
-            var rightHintText = it.getText(R.styleable.CommonItem_rightHintText)
+            var leftText = it.getText(R.styleable.CommonItemBar_leftText)
+            var rightText = it.getText(R.styleable.CommonItemBar_rightText)
+            var rightHintText = it.getText(R.styleable.CommonItemBar_rightHintText)
             View.inflate(context, R.layout.layout_common_et_item, this)
             tvLeft.text = leftText
             etRight.setText(rightText)

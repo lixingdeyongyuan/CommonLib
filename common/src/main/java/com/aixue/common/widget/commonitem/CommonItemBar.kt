@@ -22,11 +22,11 @@ open class CommonItemBar @JvmOverloads constructor(
         attrs?.let {
             var typedArray: TypedArray? = null
             try {
-                typedArray = context!!.obtainStyledAttributes(attrs, R.styleable.CommonItem)
+                typedArray = context!!.obtainStyledAttributes(attrs, R.styleable.CommonItemBar)
                 val dividerHeight =
-                    typedArray.getDimension(R.styleable.CommonItem_dividerHeight, 2f)
+                    typedArray.getDimension(R.styleable.CommonItemBar_dividerHeight, 2f)
                 val dividerColor = typedArray.getColor(
-                    R.styleable.CommonItem_dividerColor,
+                    R.styleable.CommonItemBar_dividerColor,
                     ContextCompat.getColor(context, R.color.dividerColor)
                 )
                 initView(typedArray)

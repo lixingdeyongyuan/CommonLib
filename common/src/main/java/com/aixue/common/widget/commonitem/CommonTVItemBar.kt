@@ -17,8 +17,8 @@ class CommonTVItemBar @JvmOverloads constructor(
     override fun initView(typedArray: TypedArray?) {
         super.initView(typedArray)
         typedArray?.let {
-            var leftText = it.getText(R.styleable.CommonItem_leftText)
-            var rightText = it.getText(R.styleable.CommonItem_rightText)
+            var leftText = it.getText(R.styleable.CommonItemBar_leftText)
+            var rightText = it.getText(R.styleable.CommonItemBar_rightText)
             View.inflate(context, R.layout.layout_common_tv_item, this)
             tvLeft.text = leftText
             tvRight.text = rightText
