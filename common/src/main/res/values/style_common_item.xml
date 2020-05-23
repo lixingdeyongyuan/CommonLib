@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CommonItem">
+    <declare-styleable name="CommonItemBar">
 
         <attr name="dividerHeight" format="dimension|reference" />
         <attr name="dividerColor" format="color|reference" />
