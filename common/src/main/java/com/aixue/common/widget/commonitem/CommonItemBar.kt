@@ -5,18 +5,16 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.aixue.common.R
-import java.lang.Exception
 
 open class CommonItemBar @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) :
-    RelativeLayout(context, attrs, defStyleAttr) {
-
+    ConstraintLayout(context, attrs, defStyleAttr) {
 
     init {
         attrs?.let {
@@ -27,14 +25,16 @@ open class CommonItemBar @JvmOverloads constructor(
                     typedArray.getDimension(R.styleable.CommonItemBar_dividerHeight, 2f)
                 val dividerColor = typedArray.getColor(
                     R.styleable.CommonItemBar_dividerColor,
-                    ContextCompat.getColor(context, R.color.dividerColor)
+                    ContextCompat.getColor(context, android.R.color.holo_green_dark)
                 )
                 initView(typedArray)
                 typedArray.recycle()
                 var divider = View(context)
-                var lp =
-                    LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(dividerHeight))
-                lp.addRule(ALIGN_PARENT_BOTTOM)
+                var lp = LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    Math.round(dividerHeight)
+                )
+                lp.bottomToBottom = this.bottom
                 divider.layoutParams = lp
                 divider.setBackgroundColor(dividerColor)
                 addView(divider, lp)

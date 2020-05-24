@@ -22,6 +22,7 @@ class CommonTVItemBar @JvmOverloads constructor(
             View.inflate(context, R.layout.layout_common_tv_item, this)
             tvLeft.text = leftText
             tvRight.text = rightText
+
         }
     }
 
