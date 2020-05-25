@@ -6,15 +6,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPrefixCode"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"/>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvNum"
             android:layout_toRightOf="@id/rvPrefixCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
 
 </merge>
