@@ -1,16 +1,12 @@
 package com.aixue.common.widget.keyboard
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Rect
 import android.util.AttributeSet
-import android.util.LayoutDirection
+import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.aixue.common.R
 import com.aixue.common.widget.decoration.RecyclerItemDecoration
 import com.aixue.common.widget.keyboard.vb.NumVb
@@ -63,8 +59,13 @@ class NumKeyboard @JvmOverloads constructor(
         numList.add("0")
         numList.add("确定")
         mNumAdapter.items = numList
-        rvNum.adapter = mNumAdapter
-        mNumAdapter.register(String::class.java, NumVb())
+
         rvNum.layoutManager = GridLayoutManager(context, 4)
+        rvPrefixCode.post{
+            Log.d("CustomRv","CustomRv.rvPrefixCode.height=${rvPrefixCode.height}")
+            rvNum.adapter = mNumAdapter
+            mNumAdapter.register(String::class.java, NumVb(rvPrefixCode.height))
+        }
+
     }
 }

@@ -6,11 +6,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPrefixCode"
             android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.aixue.common.widget.keyboard.CustomRv
             android:id="@+id/rvNum"
             android:layout_toRightOf="@id/rvPrefixCode"
+            android:layout_alignTop="@+id/rvPrefixCode"
+            android:layout_alignBottom="@+id/rvPrefixCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
