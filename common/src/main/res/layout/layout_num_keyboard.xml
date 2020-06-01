@@ -9,8 +9,9 @@
             android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"/>
 
-        <com.aixue.common.widget.keyboard.CustomRv
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvNum"
+
             android:layout_toRightOf="@id/rvPrefixCode"
             android:layout_alignTop="@+id/rvPrefixCode"
             android:layout_alignBottom="@+id/rvPrefixCode"

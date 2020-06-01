@@ -1,13 +1,16 @@
 package com.aixue.common.widget.keyboard
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.aixue.common.R
+import com.aixue.common.widget.decoration.ColorDividerItemDecoration
 import com.aixue.common.widget.decoration.RecyclerItemDecoration
 import com.aixue.common.widget.keyboard.vb.NumVb
 import com.aixue.common.widget.keyboard.vb.PrefixCodeVb
@@ -34,11 +37,14 @@ class NumKeyboard @JvmOverloads constructor(
         prefixCodeList.add("000")
         prefixCodeList.add("002")
         prefixCodeList.add("300")
+
+        mPrefixCodeAdapter.register(String::class.java, PrefixCodeVb())
+        rvPrefixCode.addItemDecoration(RecyclerItemDecoration(context,LinearLayoutManager.VERTICAL,5,Color.parseColor("#ff000000")))
+//        rvPrefixCode.addItemDecoration(ColorDividerItemDecoration())
+        rvPrefixCode.layoutManager = LinearLayoutManager(context)
         rvPrefixCode.adapter = mPrefixCodeAdapter
         mPrefixCodeAdapter.items = prefixCodeList
-        mPrefixCodeAdapter.register(String::class.java, PrefixCodeVb())
-        rvPrefixCode.addItemDecoration(RecyclerItemDecoration(context,LinearLayoutManager.VERTICAL,5,resources.getColor(android.R.color.black)))
-        rvPrefixCode.layoutManager = LinearLayoutManager(context)
+
 
         mNumAdapter = MultiTypeAdapter()
         val numList = ArrayList<String>()
@@ -61,10 +67,9 @@ class NumKeyboard @JvmOverloads constructor(
         mNumAdapter.items = numList
 
         rvNum.layoutManager = GridLayoutManager(context, 4)
-        rvPrefixCode.post{
-            Log.d("CustomRv","CustomRv.rvPrefixCode.height=${rvPrefixCode.height}")
+        rvNum.post{
+            mNumAdapter.register(String::class.java, NumVb(rvNum.height))
             rvNum.adapter = mNumAdapter
-            mNumAdapter.register(String::class.java, NumVb(rvPrefixCode.height))
         }
 
     }
