@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +17,7 @@ public class RecyclerItemDecoration extends RecyclerView.ItemDecoration {
 
     private Paint mPaint;
     private Drawable mDivider;
-    private int mDividerHeight = 2;//分割线高度，默认为2px
+    private int mDividerHeight = 2;//分割线高度，默认为1px
     private int mOrientation;//列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
 
@@ -61,26 +60,20 @@ public class RecyclerItemDecoration extends RecyclerView.ItemDecoration {
      * @param dividerColor  分割线颜色
      */
     public RecyclerItemDecoration(Context context, int orientation, int dividerHeight, int dividerColor) {
-        mOrientation = orientation;
+        this(context, orientation);
         mDividerHeight = dividerHeight;
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(dividerColor);
+        mPaint.setStyle(Paint.Style.FILL);
     }
+
 
 
     //获取分割线尺寸
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
-        if (mOrientation == LinearLayout.VERTICAL) {
-            if (parent.getChildAdapterPosition(view) == 0) {
-                return;
-            }
-            outRect.set(0, mDividerHeight, 0, 0);
-        } else {
-            // TODO 设置水平
-        }
+        outRect.set(0, 0, 0, mDividerHeight);
     }
 
     //绘制分割线
@@ -96,22 +89,40 @@ public class RecyclerItemDecoration extends RecyclerView.ItemDecoration {
 
     //绘制横向 item 分割线
     private void drawHorizontal(Canvas canvas, RecyclerView parent) {
-        // TODO
+        final int left = parent.getPaddingLeft();
+        final int right = parent.getMeasuredWidth() - parent.getPaddingRight();
+        final int childSize = parent.getChildCount();
+        for (int i = 0; i < childSize; i++) {
+            final View child = parent.getChildAt(i);
+            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+            final int top = child.getBottom() + layoutParams.bottomMargin;
+            final int bottom = top + mDividerHeight;
+            if (mDivider != null) {
+                mDivider.setBounds(left, top, right, bottom);
+                mDivider.draw(canvas);
+            }
+            if (mPaint != null) {
+                canvas.drawRect(left, top, right, bottom, mPaint);
+            }
+        }
     }
 
     //绘制纵向 item 分割线
     private void drawVertical(Canvas canvas, RecyclerView parent) {
-        for (int i = 0; i < parent.getChildCount(); i++) {
-            if (i == 0) {
-                continue;
+        final int top = parent.getPaddingTop();
+        final int bottom = parent.getMeasuredHeight() - parent.getPaddingBottom();
+        final int childSize = parent.getChildCount();
+        for (int i = 0; i < childSize; i++) {
+            final View child = parent.getChildAt(i);
+            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+            final int left = child.getRight() + layoutParams.rightMargin;
+            final int right = left + mDividerHeight;
+            if (mDivider != null) {
+                mDivider.setBounds(left, top, right, bottom);
+                mDivider.draw(canvas);
             }
-            View child = parent.getChildAt(i);
             if (mPaint != null) {
-                float dividerTop = child.getTop() - mDividerHeight;
-                float dividerLeft = parent.getPaddingLeft();
-                float dividerBottom = child.getTop();
-                float dividerRight = parent.getWidth() - parent.getPaddingRight();
-                canvas.drawRect(dividerLeft, dividerTop, dividerRight, dividerBottom, mPaint);
+                canvas.drawRect(left, top, right, bottom, mPaint);
             }
         }
     }

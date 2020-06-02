@@ -2,15 +2,14 @@ package com.aixue.common.widget.keyboard
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Rect
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aixue.common.R
-import com.aixue.common.widget.decoration.ColorDividerItemDecoration
 import com.aixue.common.widget.decoration.RecyclerItemDecoration
 import com.aixue.common.widget.keyboard.vb.NumVb
 import com.aixue.common.widget.keyboard.vb.PrefixCodeVb
@@ -24,6 +23,9 @@ class NumKeyboard @JvmOverloads constructor(
 ) :
     RelativeLayout(context, attrs, defStyleAttr) {
 
+    companion object{
+        const val SP_HEIGHT = 2
+    }
 
     private lateinit var mPrefixCodeAdapter: MultiTypeAdapter
     private lateinit var mNumAdapter: MultiTypeAdapter
@@ -39,8 +41,19 @@ class NumKeyboard @JvmOverloads constructor(
         prefixCodeList.add("300")
 
         mPrefixCodeAdapter.register(String::class.java, PrefixCodeVb())
-        rvPrefixCode.addItemDecoration(RecyclerItemDecoration(context,LinearLayoutManager.VERTICAL,5,Color.parseColor("#ff000000")))
-//        rvPrefixCode.addItemDecoration(ColorDividerItemDecoration())
+        rvPrefixCode.addItemDecoration(
+            object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    super.getItemOffsets(outRect, view, parent, state)
+                    outRect.top = SP_HEIGHT
+                }
+            }
+        )
         rvPrefixCode.layoutManager = LinearLayoutManager(context)
         rvPrefixCode.adapter = mPrefixCodeAdapter
         mPrefixCodeAdapter.items = prefixCodeList
@@ -67,8 +80,29 @@ class NumKeyboard @JvmOverloads constructor(
         mNumAdapter.items = numList
 
         rvNum.layoutManager = GridLayoutManager(context, 4)
-        rvNum.post{
-            mNumAdapter.register(String::class.java, NumVb(rvNum.height))
+        rvNum.post {
+            rvNum.addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    super.getItemOffsets(outRect, view, parent, state)
+                    val position = parent.getChildAdapterPosition(view)
+                    if (position % 4 == 0) {
+                        outRect.left = SP_HEIGHT
+                        outRect.right = SP_HEIGHT
+                    } else if (position % 4 == 1 || position % 4 == 2) {
+                        outRect.right = SP_HEIGHT
+                    }
+                    outRect.top = SP_HEIGHT
+                }
+            })
+            mNumAdapter.register(
+                String::class.java,
+                NumVb(rvNum.height - 4 * SP_HEIGHT)
+            )
             rvNum.adapter = mNumAdapter
         }
 
