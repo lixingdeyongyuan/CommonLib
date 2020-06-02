@@ -1,7 +1,6 @@
 package com.aixue.common.widget.keyboard
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aixue.common.R
-import com.aixue.common.widget.decoration.RecyclerItemDecoration
 import com.aixue.common.widget.keyboard.vb.NumVb
 import com.aixue.common.widget.keyboard.vb.PrefixCodeVb
 import com.drakeet.multitype.MultiTypeAdapter
@@ -23,14 +21,29 @@ class NumKeyboard @JvmOverloads constructor(
 ) :
     RelativeLayout(context, attrs, defStyleAttr) {
 
-    companion object{
+    companion object {
         const val SP_HEIGHT = 2
+
+        const val KEY_BACK = "回退"
+        const val KEY_HIDE = "隐藏"
+        const val KEY_CLEAR = "清空"
+        const val KEY_SYS_KEYBOARD = "系统键盘"
+        const val KEY_CONFIRM = "确定"
     }
 
     private lateinit var mPrefixCodeAdapter: MultiTypeAdapter
     private lateinit var mNumAdapter: MultiTypeAdapter
+    private lateinit var mInterOnKeyInputListener: OnKeyInputListener
+    private var mOnKeyInputListener: OnKeyInputListener? = null
 
     init {
+        mInterOnKeyInputListener = object : OnKeyInputListener {
+            override fun onKey(key: String) {
+                mOnKeyInputListener?.let {
+                    it.onKey(key)
+                }
+            }
+        }
         View.inflate(context, R.layout.layout_num_keyboard, this)
         mPrefixCodeAdapter = MultiTypeAdapter()
         val prefixCodeList = ArrayList<String>()
@@ -40,7 +53,7 @@ class NumKeyboard @JvmOverloads constructor(
         prefixCodeList.add("002")
         prefixCodeList.add("300")
 
-        mPrefixCodeAdapter.register(String::class.java, PrefixCodeVb())
+        mPrefixCodeAdapter.register(String::class.java, PrefixCodeVb(mInterOnKeyInputListener))
         rvPrefixCode.addItemDecoration(
             object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
@@ -64,19 +77,19 @@ class NumKeyboard @JvmOverloads constructor(
         numList.add("1")
         numList.add("2")
         numList.add("3")
-        numList.add("回退")
+        numList.add(KEY_BACK)
         numList.add("4")
         numList.add("5")
         numList.add("6")
-        numList.add("隐藏")
+        numList.add(KEY_HIDE)
         numList.add("7")
         numList.add("8")
         numList.add("9")
-        numList.add("清空")
+        numList.add(KEY_CLEAR)
         numList.add("ABC")
-        numList.add("系统键盘")
+        numList.add(KEY_SYS_KEYBOARD)
         numList.add("0")
-        numList.add("确定")
+        numList.add(KEY_CONFIRM)
         mNumAdapter.items = numList
 
         rvNum.layoutManager = GridLayoutManager(context, 4)
@@ -101,10 +114,14 @@ class NumKeyboard @JvmOverloads constructor(
             })
             mNumAdapter.register(
                 String::class.java,
-                NumVb(rvNum.height - 4 * SP_HEIGHT)
+                NumVb(rvNum.height - 4 * SP_HEIGHT, mInterOnKeyInputListener)
             )
             rvNum.adapter = mNumAdapter
         }
 
+    }
+
+    fun setOnKeyInputListener(onKeyInputListener: OnKeyInputListener){
+        mOnKeyInputListener = onKeyInputListener
     }
 }
