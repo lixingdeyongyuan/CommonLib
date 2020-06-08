@@ -24,23 +24,49 @@ class NumKeyboard @JvmOverloads constructor(
     companion object {
         const val SP_HEIGHT = 2
 
-        const val KEY_BACK = "回退"
+        const val KEY_GO_BACK = "回退"
         const val KEY_HIDE = "隐藏"
         const val KEY_CLEAR = "清空"
-        const val KEY_SYS_KEYBOARD = "系统键盘"
+//        const val KEY_ABC = "ABC"
+//        const val KEY_SYS_KEYBOARD = "系统键盘"
+        const val KEY_ABC = ""
+        const val KEY_SYS_KEYBOARD = ""
         const val KEY_CONFIRM = "确定"
     }
 
-    private lateinit var mPrefixCodeAdapter: MultiTypeAdapter
-    private lateinit var mNumAdapter: MultiTypeAdapter
-    private lateinit var mInterOnKeyInputListener: OnKeyInputListener
+    private  var mPrefixCodeAdapter: MultiTypeAdapter
+    private  var mNumAdapter: MultiTypeAdapter
+    private  var mInterOnKeyInputListener: OnKeyInputListener
     private var mOnKeyInputListener: OnKeyInputListener? = null
 
     init {
         mInterOnKeyInputListener = object : OnKeyInputListener {
+            override fun onGoBack() {
+
+            }
+
+            override fun onHide() {
+            }
+
+            override fun onClear() {
+            }
+
+            override fun onConfirm() {
+            }
+
             override fun onKey(key: String) {
                 mOnKeyInputListener?.let {
-                    it.onKey(key)
+                    if (KEY_GO_BACK.equals(key)) {
+                        it.onGoBack()
+                    } else if (KEY_HIDE.equals(key)) {
+                        it.onHide()
+                    } else if (KEY_CLEAR.equals(key)) {
+                        it.onClear()
+                    } else if (KEY_CONFIRM.equals(key)) {
+                        it.onConfirm()
+                    } else {
+                        it.onKey(key)
+                    }
                 }
             }
         }
@@ -77,7 +103,7 @@ class NumKeyboard @JvmOverloads constructor(
         numList.add("1")
         numList.add("2")
         numList.add("3")
-        numList.add(KEY_BACK)
+        numList.add(KEY_GO_BACK)
         numList.add("4")
         numList.add("5")
         numList.add("6")
@@ -86,7 +112,7 @@ class NumKeyboard @JvmOverloads constructor(
         numList.add("8")
         numList.add("9")
         numList.add(KEY_CLEAR)
-        numList.add("ABC")
+        numList.add(KEY_ABC)
         numList.add(KEY_SYS_KEYBOARD)
         numList.add("0")
         numList.add(KEY_CONFIRM)
@@ -121,7 +147,7 @@ class NumKeyboard @JvmOverloads constructor(
 
     }
 
-    fun setOnKeyInputListener(onKeyInputListener: OnKeyInputListener){
+    fun setOnKeyInputListener(onKeyInputListener: OnKeyInputListener) {
         mOnKeyInputListener = onKeyInputListener
     }
 }

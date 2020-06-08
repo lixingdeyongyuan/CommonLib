@@ -15,6 +15,22 @@ class MainActivity : AppCompatActivity() {
             Log.d("rlog","haga")
         }
         nkb.setOnKeyInputListener(object :OnKeyInputListener{
+            override fun onGoBack() {
+                Log.d("rlog","onGoBack")
+            }
+
+            override fun onHide() {
+                Log.d("rlog","onHide")
+            }
+
+            override fun onClear() {
+                Log.d("rlog","onClear")
+            }
+
+            override fun onConfirm() {
+                Log.d("rlog","onConfirm")
+            }
+
             override fun onKey(key: String) {
                 Log.d("rlog","key =$key")
             }
