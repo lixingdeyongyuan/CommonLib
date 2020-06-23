@@ -20,12 +20,18 @@ class CommonETItemBar @JvmOverloads constructor(
         super.initView(typedArray)
         typedArray?.let {
             var leftText = it.getText(R.styleable.CommonItemBar_leftText)
+            var leftTextSize =
+                typedArray.getDimensionPixelSize(R.styleable.CommonItemBar_leftTextSize, 15)
             var rightText = it.getText(R.styleable.CommonItemBar_rightText)
             var rightHintText = it.getText(R.styleable.CommonItemBar_rightHintText)
+            var rightTextSize =
+                typedArray.getDimensionPixelSize(R.styleable.CommonItemBar_rightTextSize, 15)
             View.inflate(context, R.layout.layout_common_et_item, this)
             tvLeft.text = leftText
+            tvLeft.setTextSize(leftTextSize.toFloat())
             etRight.setText(rightText)
             etRight.setHint(rightHintText)
+            etRight.setTextSize(rightTextSize.toFloat())
         }
     }
 
