@@ -5,16 +5,15 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import android.widget.EditText
 import com.aixue.common.R
 import kotlinx.android.synthetic.main.layout_common_et_item.view.*
-import kotlinx.android.synthetic.main.layout_common_et_item.view.tvLeft
 
 class CommonETItemBar @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) :
-    CommonItemBar(context, attrs, defStyleAttr) {
+) : CommonItemBar(context, attrs, defStyleAttr) {
 
 
     override fun initView(typedArray: TypedArray?) {
@@ -49,5 +48,14 @@ class CommonETItemBar @JvmOverloads constructor(
         //NOTE 这个text不可能为空。因为源码就表达了不为空
         return etRight.text
     }
+
+    fun getRightView(): EditText {
+        return etRight
+    }
+
+    fun getLeftView(): View {
+        return tvLeft
+    }
+
 
 }

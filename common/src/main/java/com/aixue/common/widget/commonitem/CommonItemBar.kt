@@ -3,6 +3,7 @@ package com.aixue.common.widget.commonitem
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,12 +22,17 @@ open class CommonItemBar @JvmOverloads constructor(
 
     private var mDividerHeight = 2f
     private var mDividerColor = 0
+    private var mDispatchTouchEventType = 0
+    private var mInterceptTouchEventType = 0
 
     init {
         attrs?.let {
             var typedArray: TypedArray? = null
             try {
                 typedArray = context!!.obtainStyledAttributes(attrs, R.styleable.CommonItemBar)
+                mDispatchTouchEventType =
+                    typedArray.getInt(R.styleable.CommonItemBar_dispatchTouchEventType, 0)
+                mInterceptTouchEventType = typedArray.getInt(R.styleable.CommonItemBar_interceptTouchEventType, 0)
                 mDividerHeight =
                     typedArray.getDimension(R.styleable.CommonItemBar_dividerHeight, 2f)
                 mDividerColor = typedArray.getColor(
@@ -61,5 +67,21 @@ open class CommonItemBar @JvmOverloads constructor(
 
     open fun initView(typedArray: TypedArray?) {
 
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        when (mDispatchTouchEventType) {
+            1 -> return true
+            2 -> return false
+            else -> return super.dispatchTouchEvent(ev)
+        }
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        when (mInterceptTouchEventType) {
+            1 -> return true
+            2 -> return false
+            else -> return super.onInterceptTouchEvent(ev)
+        }
     }
 }

@@ -4,6 +4,16 @@
 
         <attr name="dividerHeight" format="dimension|reference" />
         <attr name="dividerColor" format="color|reference" />
+        <attr name="dispatchTouchEventType" format="enum">
+            <enum name="def" value="0" />
+            <enum name="yes" value="1" />
+            <enum name="no" value="2" />
+        </attr>
+        <attr name="interceptTouchEventType" format="enum">
+            <enum name="def" value="0" />
+            <enum name="yes" value="1" />
+            <enum name="no" value="2" />
+        </attr>
         <attr name="leftText" format="string|reference" />
         <attr name="leftTextSize" format="dimension" />
         <attr name="rightText" format="string|reference" />

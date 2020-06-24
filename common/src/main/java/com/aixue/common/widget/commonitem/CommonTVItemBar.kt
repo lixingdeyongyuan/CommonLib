@@ -46,4 +46,12 @@ class CommonTVItemBar @JvmOverloads constructor(
         return tvRight.text
     }
 
+    fun getRightView(): View {
+        return tvRight
+    }
+
+    fun getLeftView(): View {
+        return tvLeft
+    }
+
 }
