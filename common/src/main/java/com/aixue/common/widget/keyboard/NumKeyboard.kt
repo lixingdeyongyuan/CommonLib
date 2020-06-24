@@ -27,59 +27,41 @@ class NumKeyboard @JvmOverloads constructor(
         const val KEY_GO_BACK = "回退"
         const val KEY_HIDE = "隐藏"
         const val KEY_CLEAR = "清空"
-//        const val KEY_ABC = "ABC"
-//        const val KEY_SYS_KEYBOARD = "系统键盘"
-        const val KEY_ABC = ""
-        const val KEY_SYS_KEYBOARD = ""
+        //        const val KEY_COPY = "ABC"
+//        const val KEY_PASTE = "系统键盘"
+        const val KEY_COPY = "复制"
+        const val KEY_PASTE = "粘贴"
         const val KEY_CONFIRM = "确定"
     }
 
-    private  var mPrefixCodeAdapter: MultiTypeAdapter
-    private  var mNumAdapter: MultiTypeAdapter
-    private  var mInterOnKeyInputListener: OnKeyInputListener
+    private var mPrefixCodeAdapter: MultiTypeAdapter
+    private var mNumAdapter: MultiTypeAdapter
+    private var mInterOnNumClickListener: OnNumClickListener
     private var mOnKeyInputListener: OnKeyInputListener? = null
 
     init {
-        mInterOnKeyInputListener = object : OnKeyInputListener {
-            override fun onGoBack() {
-
-            }
-
-            override fun onHide() {
-            }
-
-            override fun onClear() {
-            }
-
-            override fun onConfirm() {
-            }
-
-            override fun onKey(key: String) {
-                mOnKeyInputListener?.let {
-                    if (KEY_GO_BACK.equals(key)) {
-                        it.onGoBack()
-                    } else if (KEY_HIDE.equals(key)) {
-                        it.onHide()
-                    } else if (KEY_CLEAR.equals(key)) {
-                        it.onClear()
-                    } else if (KEY_CONFIRM.equals(key)) {
-                        it.onConfirm()
-                    } else {
-                        it.onKey(key)
+        mInterOnNumClickListener = object : OnNumClickListener {
+            override fun onClick(item: KeyBean) {
+                if (item.type == 1) {
+                    when (item.postion) {
+                        3 -> mOnKeyInputListener?.onGoBack()
+                        7 -> mOnKeyInputListener?.onHide()
+                        11 -> mOnKeyInputListener?.onClear()
+                        12 -> mOnKeyInputListener?.onCopy()
+                        13 -> mOnKeyInputListener?.onPaste()
+                        15 -> mOnKeyInputListener?.onConfirm()
+                        else -> mOnKeyInputListener?.onKey(item.keyName)
                     }
+                } else {
+                    mOnKeyInputListener?.onKey(item.keyName)
                 }
             }
         }
         View.inflate(context, R.layout.layout_num_keyboard, this)
         mPrefixCodeAdapter = MultiTypeAdapter()
-        val prefixCodeList = ArrayList<String>()
-        prefixCodeList.add("600")
-        prefixCodeList.add("601")
-        prefixCodeList.add("000")
-        prefixCodeList.add("002")
-        prefixCodeList.add("300")
+        val prefixCodeList = getPrefixCodeList()
 
-        mPrefixCodeAdapter.register(String::class.java, PrefixCodeVb(mInterOnKeyInputListener))
+        mPrefixCodeAdapter.register(KeyBean::class.java, PrefixCodeVb(mInterOnNumClickListener))
         rvPrefixCode.addItemDecoration(
             object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
@@ -99,23 +81,7 @@ class NumKeyboard @JvmOverloads constructor(
 
 
         mNumAdapter = MultiTypeAdapter()
-        val numList = ArrayList<String>()
-        numList.add("1")
-        numList.add("2")
-        numList.add("3")
-        numList.add(KEY_GO_BACK)
-        numList.add("4")
-        numList.add("5")
-        numList.add("6")
-        numList.add(KEY_HIDE)
-        numList.add("7")
-        numList.add("8")
-        numList.add("9")
-        numList.add(KEY_CLEAR)
-        numList.add(KEY_ABC)
-        numList.add(KEY_SYS_KEYBOARD)
-        numList.add("0")
-        numList.add(KEY_CONFIRM)
+        val numList = getNumList()
         mNumAdapter.items = numList
 
         rvNum.layoutManager = GridLayoutManager(context, 4)
@@ -139,12 +105,49 @@ class NumKeyboard @JvmOverloads constructor(
                 }
             })
             mNumAdapter.register(
-                String::class.java,
-                NumVb(rvNum.height - 4 * SP_HEIGHT, mInterOnKeyInputListener)
+                KeyBean::class.java,
+                NumVb(rvNum.height - 4 * SP_HEIGHT, mInterOnNumClickListener)
             )
             rvNum.adapter = mNumAdapter
         }
 
+    }
+
+    open fun getPrefixCodeList(): ArrayList<KeyBean> {
+        val prefixCodeList = ArrayList<KeyBean>()
+        prefixCodeList.add(KeyBean(0, "600"))
+        prefixCodeList.add(KeyBean(0, "601"))
+        prefixCodeList.add(KeyBean(0, "000"))
+        prefixCodeList.add(KeyBean(0, "002"))
+        prefixCodeList.add(KeyBean(0, "300"))
+        prefixCodeList.forEachIndexed { index, bean ->
+            bean.postion = index
+        }
+        return prefixCodeList
+    }
+
+    open fun getNumList(): ArrayList<KeyBean> {
+        val numList = ArrayList<KeyBean>()
+        numList.add(KeyBean(1, "1"))
+        numList.add(KeyBean(1, "2"))
+        numList.add(KeyBean(1, "3"))
+        numList.add(KeyBean(1, KEY_GO_BACK))
+        numList.add(KeyBean(1, "4"))
+        numList.add(KeyBean(1, "5"))
+        numList.add(KeyBean(1, "6"))
+        numList.add(KeyBean(1, KEY_HIDE))
+        numList.add(KeyBean(1, "7"))
+        numList.add(KeyBean(1, "8"))
+        numList.add(KeyBean(1, "9"))
+        numList.add(KeyBean(1, KEY_CLEAR))
+        numList.add(KeyBean(1, KEY_COPY))
+        numList.add(KeyBean(1, KEY_PASTE))
+        numList.add(KeyBean(1, "0"))
+        numList.add(KeyBean(1, KEY_CONFIRM))
+        numList.forEachIndexed { index, bean ->
+            bean.postion = index
+        }
+        return numList
     }
 
     fun setOnKeyInputListener(onKeyInputListener: OnKeyInputListener) {

@@ -12,5 +12,9 @@ interface OnKeyInputListener {
 
     fun onConfirm()
 
+    fun onCopy()
+
+    fun onPaste()
+
 
 }

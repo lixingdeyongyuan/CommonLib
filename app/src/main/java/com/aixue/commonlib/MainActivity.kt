@@ -15,6 +15,14 @@ class MainActivity : AppCompatActivity() {
             Log.d("rlog","haga")
         }
         nkb.setOnKeyInputListener(object :OnKeyInputListener{
+            override fun onCopy() {
+                Log.d("rlog","onCopy")
+            }
+
+            override fun onPaste() {
+                Log.d("rlog","onPaste")
+            }
+
             override fun onGoBack() {
                 Log.d("rlog","onGoBack")
             }
