@@ -3,6 +3,7 @@ package com.aixue.common.widget.commonitem
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import com.aixue.common.R
 import kotlinx.android.synthetic.main.layout_common_et_item.view.*
@@ -24,13 +25,14 @@ class CommonETItemBar @JvmOverloads constructor(
                 typedArray.getDimensionPixelSize(R.styleable.CommonItemBar_leftTextSize, 15)
             var rightText = it.getText(R.styleable.CommonItemBar_rightText)
             var rightHintText = it.getText(R.styleable.CommonItemBar_rightHintText)
-            var rightTextSize = typedArray.getDimensionPixelSize(R.styleable.CommonItemBar_rightTextSize, 15)
+            var rightTextSize =
+                typedArray.getDimensionPixelSize(R.styleable.CommonItemBar_rightTextSize, 15)
             View.inflate(context, R.layout.layout_common_et_item, this)
             tvLeft.text = leftText
-            tvLeft.setTextSize(leftTextSize.toFloat())
+            tvLeft.setTextSize(TypedValue.COMPLEX_UNIT_SP, leftTextSize.toFloat())
             etRight.setText(rightText)
             etRight.setHint(rightHintText)
-            etRight.setTextSize(rightTextSize.toFloat())
+            etRight.setTextSize(TypedValue.COMPLEX_UNIT_SP, rightTextSize.toFloat())
         }
     }
 
